@@ -23,8 +23,15 @@ function SimpleForm() {
     setFormValues({ ...formValues, [name]: value })
   }
 
-  console.log(formValues)
-
+  const submit = (event) => {
+    event.preventDefault()
+    const newPet = {
+      petName: formValues.petName.trim(),
+      petType: formValues.petType.trim()
+    }
+    setPets([...pets, newPet])
+    setFormValues(initialFormValues)
+  }
   return (
     <div className='container'>
       <h1>Simple Form App</h1>
@@ -33,16 +40,18 @@ function SimpleForm() {
           {pet.petName} is a {pet.petType}
         </div>
       ))}
-      <form>
+      <form onSubmit={submit}>
         <input
           type='text'
           name='petName'
           onChange={change}
+          value={formValues.petName}
         />
         <input
           type='text'
           name='petType'
           onChange={change}
+          value={formValues.petType}
         />
         <button>Submit</button>
       </form>
@@ -52,8 +61,8 @@ function SimpleForm() {
 
 render(
   <>
-    <SimpleForm />
-    {/* <App /> */}
+    {/* <SimpleForm /> */}
+    <App />
   </>
   , document.querySelector('#root')
 )
